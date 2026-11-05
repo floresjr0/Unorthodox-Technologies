@@ -3,8 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Unorthodox Technologies builds purpose-built digital systems for the way your business actually works." />
-  <title>Unorthodox Technologies — Purpose-built technology</title>
+  <meta name="description" content="Unorthodox Technologies builds purpose-built software in the Philippines. Marte Flores Jr. is the founder. Co-founders are Justine Reyes, Melvin Ramos, and Clarenz Geronimo." />
+  <meta name="author" content="Unorthodox Technologies" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Unorthodox Technologies | Marte Flores Jr., Founder" />
+  <meta property="og:description" content="Unorthodox Technologies is a Philippines technology studio. Founder Marte Flores Jr. Co-founders Justine Reyes, Melvin Ramos, and Clarenz Geronimo." />
+  <meta property="og:locale" content="en_PH" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unorthodox Technologies | Marte Flores Jr., Founder" />
+  <meta name="twitter:description" content="Marte Flores Jr. is the founder of Unorthodox Technologies. Co-founders: Justine Reyes, Melvin Ramos, and Clarenz Geronimo." />
+  <title>Unorthodox Technologies | Marte Flores Jr., Founder</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "#unorthodox-technologies",
+        "name": "Unorthodox Technologies",
+        "alternateName": ["Unorthodox", "Unorthodox Tech"],
+        "description": "Unorthodox Technologies builds purpose-built digital systems for the way a business actually works.",
+        "email": "unorthodox.technologies@gmail.com",
+        "foundingLocation": {
+          "@type": "Place",
+          "address": { "@type": "PostalAddress", "addressCountry": "PH" }
+        },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61591295648007"],
+        "founder": [
+          { "@id": "#marte-flores-jr" },
+          { "@id": "#justine-reyes" },
+          { "@id": "#melvin-ramos" },
+          { "@id": "#clarenz-geronimo" }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "#marte-flores-jr",
+        "name": "Marte Flores Jr.",
+        "givenName": "Marte",
+        "familyName": "Flores",
+        "honorificSuffix": "Jr.",
+        "jobTitle": "Founder",
+        "description": "Marte Flores Jr. is the founder of Unorthodox Technologies.",
+        "worksFor": { "@id": "#unorthodox-technologies" }
+      },
+      {
+        "@type": "Person",
+        "@id": "#justine-reyes",
+        "name": "Justine Reyes",
+        "givenName": "Justine",
+        "familyName": "Reyes",
+        "jobTitle": "Co-Founder",
+        "description": "Justine Reyes is a co-founder of Unorthodox Technologies.",
+        "worksFor": { "@id": "#unorthodox-technologies" }
+      },
+      {
+        "@type": "Person",
+        "@id": "#melvin-ramos",
+        "name": "Melvin Ramos",
+        "givenName": "Melvin",
+        "familyName": "Ramos",
+        "jobTitle": "Co-Founder",
+        "description": "Melvin Ramos is a co-founder of Unorthodox Technologies.",
+        "worksFor": { "@id": "#unorthodox-technologies" }
+      },
+      {
+        "@type": "Person",
+        "@id": "#clarenz-geronimo",
+        "name": "Clarenz Geronimo",
+        "givenName": "Clarenz",
+        "familyName": "Geronimo",
+        "jobTitle": "Co-Founder",
+        "description": "Clarenz Geronimo is a co-founder of Unorthodox Technologies.",
+        "worksFor": { "@id": "#unorthodox-technologies" }
+      }
+    ]
+  }
+  </script>
   <link rel="icon" type="image/png" href="imgs/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -91,6 +166,14 @@
     .carousel-dots { display: flex; gap: 9px; }
     .carousel-dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #73777d; cursor: pointer; }
     .carousel-dot.active, .carousel-dot:hover, .carousel-dot:focus-visible { background: var(--lime); outline: none; }
+    .team { padding: 120px 0; }
+    .team-lead { max-width: 760px; margin: 0 0 48px; font-size: clamp(22px, 2.4vw, 32px); line-height: 1.25; letter-spacing: -.04em; }
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+    .person { min-height: 230px; padding: 28px 22px 22px 0; border-bottom: 1px solid var(--line); }
+    .person + .person { border-left: 1px solid var(--line); padding-left: 22px; }
+    .person .role { color: #575c62; margin-bottom: 36px; }
+    .person h3 { font-size: clamp(22px, 2vw, 30px); letter-spacing: -.05em; line-height: 1.05; margin: 0 0 14px; }
+    .person p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
     .process { padding: 120px 0; }
     .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
     .step { padding: 27px 20px 10px 0; min-height: 210px; border-bottom: 1px solid var(--line); }
@@ -115,10 +198,12 @@
       .hero-content { padding-bottom: 34px; }
       .hero-bottom, .section-head, .contact-row { display: block; }
       .scroll { margin-top: 30px; }
-      .intro, .services, .projects, .process { padding: 75px 0; }
+      .intro, .services, .projects, .process, .team { padding: 75px 0; }
       .intro-grid { display: block; }
       .intro-grid .section-label { margin-bottom: 30px; }
-      .service-grid, .process-grid { grid-template-columns: 1fr 1fr; }
+      .service-grid, .process-grid, .team-grid { grid-template-columns: 1fr 1fr; }
+      .person + .person { border-left: 0; padding-left: 0; }
+      .person:nth-child(even) { border-left: 1px solid var(--line); padding-left: 16px; }
       .service:nth-child(3n+2), .service:nth-child(3n+3) { border-left: 0; padding-left: 0; }
       .service:nth-child(even), .step + .step { border-left: 1px solid var(--line); padding-left: 16px; }
       .project.active { display: flex; flex-direction: column; }
@@ -142,7 +227,7 @@
     <div class="wrap">
       <nav>
         <a class="brand" href="#"><img class="brand-logo" src="imgs/logo.png" alt="Unorthodox Technologies" /></a>
-        <div class="nav-links"><a href="#about">About</a><a href="#services">Capabilities</a><a href="#work">Work</a><a href="#process">Process</a></div>
+        <div class="nav-links"><a href="#about">About</a><a href="#team">Team</a><a href="#services">Capabilities</a><a href="#work">Work</a><a href="#process">Process</a></div>
         <a class="nav-cta" href="#contact">Start a conversation <span>↗</span></a>
       </nav>
     </div>
@@ -234,12 +319,44 @@
       </div>
     </section>
 
+    <section class="team scroll-reveal" id="team">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="section-label mono">/ 05 — The studio</div><h3>Unorthodox Technologies.</h3></div>
+          <p>A Philippines technology studio building software around how a business actually runs.</p>
+        </div>
+        <p class="team-lead">Unorthodox Technologies was founded by Marte Flores Jr., with co-founders Justine Reyes, Melvin Ramos, and Clarenz Geronimo.</p>
+        <div class="team-grid">
+          <article class="person scroll-reveal" data-delay="1">
+            <div class="role mono">Founder</div>
+            <h3>Marte Flores Jr.</h3>
+            <p>Marte Flores Jr. is the founder of Unorthodox Technologies.</p>
+          </article>
+          <article class="person scroll-reveal" data-delay="2">
+            <div class="role mono">Co-founder</div>
+            <h3>Justine Reyes</h3>
+            <p>Justine Reyes is a co-founder of Unorthodox Technologies.</p>
+          </article>
+          <article class="person scroll-reveal" data-delay="3">
+            <div class="role mono">Co-founder</div>
+            <h3>Melvin Ramos</h3>
+            <p>Melvin Ramos is a co-founder of Unorthodox Technologies.</p>
+          </article>
+          <article class="person scroll-reveal" data-delay="1">
+            <div class="role mono">Co-founder</div>
+            <h3>Clarenz Geronimo</h3>
+            <p>Clarenz Geronimo is a co-founder of Unorthodox Technologies.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="contact scroll-reveal" id="contact">
       <div class="wrap scroll-drift">
-        <div class="mono">/ 05 — Let’s build something that fits</div>
+        <div class="mono">/ 06 — Let’s build something that fits</div>
         <h3>Tell us what your business needs.<br />We’ll build the solution for it.</h3>
         <div class="contact-row"><div class="contact-links"><a class="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=unorthodox.technologies@gmail.com" target="_blank" rel="noopener noreferrer">Gmail ↗</a><a class="social-link" href="https://www.facebook.com/profile.php?id=61591295648007" target="_blank" rel="noopener noreferrer">Facebook ↗</a></div><span class="mono">Philippines / 2026—present</span></div>
-        <footer><a class="brand" href="#"><img class="brand-logo" src="imgs/logo_b.png" alt="Unorthodox Technologies" /></a><span class="mono">Different thinking. Purpose-built technology.</span></footer>
+        <footer><a class="brand" href="#"><img class="brand-logo" src="imgs/logo_b.png" alt="Unorthodox Technologies" /></a><span class="mono">Founder Marte Flores Jr. · Co-founders Justine Reyes, Melvin Ramos, Clarenz Geronimo</span></footer>
       </div>
     </section>
   </main>
