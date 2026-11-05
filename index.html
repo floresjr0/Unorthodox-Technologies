@@ -45,6 +45,12 @@
     .hero-copy strong { color: white; font-weight: 600; }
     .scroll { display: flex; gap: 12px; align-items: center; color: var(--scroll-color); transition: color .35s ease; }
     .scroll i { display: block; width: 42px; height: 1px; background: currentColor; transition: background-color .35s ease; }
+    .scroll-reveal { opacity: 0; transform: translate3d(0, 34px, 0); transition: opacity .8s ease, transform .8s cubic-bezier(.22, 1, .36, 1); }
+    .scroll-reveal.is-visible { opacity: 1; transform: translate3d(0, calc(var(--scroll-offset, 0px) * -1), 0); }
+    .scroll-reveal[data-delay="1"] { transition-delay: .1s; }
+    .scroll-reveal[data-delay="2"] { transition-delay: .2s; }
+    .scroll-reveal[data-delay="3"] { transition-delay: .3s; }
+    .scroll-drift { transform: translate3d(0, var(--scroll-offset, 0px), 0); will-change: transform; }
     .intro { padding: 120px 0 130px; }
     .intro-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; }
     .section-label { color: #575c62; padding-top: 6px; }
@@ -66,17 +72,24 @@
     .projects { color: var(--white); background: var(--ink); padding: 120px 0; }
     .projects .section-label, .projects .section-head p { color: #90949b; }
     .projects h3 { color: white; }
-    .project { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 420px; border-top: 1px solid rgba(255,255,255,.2); }
-    .project:last-child { border-bottom: 1px solid rgba(255,255,255,.2); }
+    .project { display: none; grid-template-columns: 1.05fr 1fr; min-height: 420px; border-top: 1px solid rgba(255,255,255,.2); }
+    .project.active { display: grid; }
     .project-info { padding: 43px 50px 43px 0; }
     .project-tag { display: inline-block; color: var(--lime); border: 1px solid rgba(168,199,111,.5); border-radius: 100px; padding: 7px 12px; margin-bottom: 78px; }
     .project h4 { margin: 0 0 20px; font-size: clamp(29px, 4vw, 52px); letter-spacing: -.07em; }
     .project p { max-width: 410px; color: #a8abb0; font-size: 13px; line-height: 1.7; margin: 0 0 27px; }
     .project-meta { color: #73777d; }
-    .project-art { position: relative; overflow: hidden; border-left: 1px solid rgba(255,255,255,.2); background: #e8e9e5; }
-    .project-art img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s; }
-    .project:hover .project-art img { transform: scale(1.04); }
+    .project-art { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 420px; padding: 24px; border-left: 1px solid rgba(255,255,255,.2); background: #e8e9e5; }
+    .project-art img { width: 100%; height: 100%; display: block; object-fit: contain; transition: transform .6s; }
+    .project:hover .project-art img { transform: scale(1.02); }
     .project-art.dark { background: var(--lime); }
+    .carousel-controls { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 24px; }
+    .carousel-buttons { display: flex; gap: 8px; }
+    .carousel-button { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; color: var(--white); background: transparent; font: inherit; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+    .carousel-button:hover, .carousel-button:focus-visible { border-color: var(--lime); color: var(--ink); background: var(--lime); outline: none; }
+    .carousel-dots { display: flex; gap: 9px; }
+    .carousel-dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #73777d; cursor: pointer; }
+    .carousel-dot.active, .carousel-dot:hover, .carousel-dot:focus-visible { background: var(--lime); outline: none; }
     .process { padding: 120px 0; }
     .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
     .step { padding: 27px 20px 10px 0; min-height: 210px; border-bottom: 1px solid var(--line); }
@@ -87,7 +100,10 @@
     .contact { position: relative; overflow: hidden; background: var(--lime); padding: 110px 0 45px; }
     .contact h3 { max-width: 800px; margin-bottom: 60px; }
     .contact-row { display: flex; justify-content: space-between; align-items: end; border-top: 1px solid rgba(11,13,18,.3); padding-top: 22px; }
+    .contact-links { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
     .email { font-size: clamp(20px, 3vw, 34px); font-weight: 700; letter-spacing: -.06em; }
+    .social-link { font-size: clamp(20px, 3vw, 34px); font-weight: 700; letter-spacing: -.06em; }
+    .social-link:hover { text-decoration: underline; text-underline-offset: 4px; }
     footer { display: flex; justify-content: space-between; padding-top: 70px; color: rgba(11,13,18,.65); font-size: 11px; }
     footer .brand { color: var(--ink); }
     .contact .brand-logo { filter: saturate(.9); }
@@ -104,18 +120,19 @@
       .service-grid, .process-grid { grid-template-columns: 1fr 1fr; }
       .service:nth-child(3n+2), .service:nth-child(3n+3) { border-left: 0; padding-left: 0; }
       .service:nth-child(even), .step + .step { border-left: 1px solid var(--line); padding-left: 16px; }
-      .project { display: flex; flex-direction: column; }
+      .project.active { display: flex; flex-direction: column; }
       .project-info { padding: 30px 0; }
       .project-tag { margin-bottom: 45px; }
       .project-art { min-height: 240px; border-left: 0; }
-      .project-art.dark:after { font-size: 70px; }
+      .carousel-controls { padding-top: 18px; }
       .contact { padding: 75px 0 30px; }
       footer { padding-top: 50px; display: block; }
       footer .mono { margin-top: 20px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .hero-shape, .project-art img { animation: none; transition: none; transform: none; }
+      .hero-shape, .project-art img, .scroll-drift { animation: none; transition: none; transform: none; }
+      .scroll-reveal { opacity: 1; transform: none; transition: none; }
     }
   </style>
 </head>
@@ -142,72 +159,85 @@
       </div>
     </section>
 
-    <section class="intro" id="about">
+    <section class="intro scroll-reveal" id="about">
       <div class="wrap intro-grid">
-        <div class="section-label mono">/ 01 — The unorthodox way</div>
+        <div class="section-label mono scroll-reveal" data-delay="1">/ 01 — The unorthodox way</div>
         <h2>Technology should adapt to your business, <span>not the other way around.</span></h2>
       </div>
     </section>
 
-    <section class="statement">
-      <div class="wrap">
+    <section class="statement scroll-reveal">
+      <div class="wrap scroll-drift">
         <div class="mono">Our point of view</div>
         <h2>Built around your business.<br />Designed for your goals.</h2>
       </div>
     </section>
 
-    <section class="services" id="services">
+    <section class="services scroll-reveal" id="services">
       <div class="wrap">
         <div class="section-head">
           <div><div class="section-label mono">/ 02 — What we do</div><h3>Made to fit.</h3></div>
           <p>From first idea to daily operations, we make digital tools practical, adaptable, and genuinely useful.</p>
         </div>
         <div class="service-grid">
-          <article class="service"><div class="service-number mono">01 / Systems</div><h4>Custom business systems</h4><p>Management, inventory, and point of sale systems shaped around your workflow.</p></article>
-          <article class="service"><div class="service-number mono">02 / Digital</div><h4>Websites & platforms</h4><p>Digital experiences that communicate clearly and move your goals forward.</p></article>
-          <article class="service"><div class="service-number mono">03 / Software</div><h4>Desktop & mobile apps</h4><p>Purpose-built applications that work where your people and customers are.</p></article>
-          <article class="service"><div class="service-number mono">04 / Delivery</div><h4>Deployment</h4><p>Technical implementation that gets your solution ready for the real world.</p></article>
-          <article class="service"><div class="service-number mono">05 / Partnership</div><h4>Other IT solutions</h4><p>Have a challenge that does not fit a category? That is exactly where we start.</p></article>
-          <article class="service"><div class="service-number mono">06 / Always</div><h4>Continuous learning</h4><p>We keep improving, refining, and adapting alongside the work we build.</p></article>
+          <article class="service scroll-reveal" data-delay="1"><div class="service-number mono">01 / Systems</div><h4>Custom business systems</h4><p>Management, inventory, and point of sale systems shaped around your workflow.</p></article>
+          <article class="service scroll-reveal" data-delay="2"><div class="service-number mono">02 / Digital</div><h4>Websites & platforms</h4><p>Digital experiences that communicate clearly and move your goals forward.</p></article>
+          <article class="service scroll-reveal" data-delay="3"><div class="service-number mono">03 / Software</div><h4>Desktop & mobile apps</h4><p>Purpose-built applications that work where your people and customers are.</p></article>
+          <article class="service scroll-reveal" data-delay="1"><div class="service-number mono">04 / Delivery</div><h4>Deployment</h4><p>Technical implementation that gets your solution ready for the real world.</p></article>
+          <article class="service scroll-reveal" data-delay="2"><div class="service-number mono">05 / Partnership</div><h4>Other IT solutions</h4><p>Have a challenge that does not fit a category? That is exactly where we start.</p></article>
+          <article class="service scroll-reveal" data-delay="3"><div class="service-number mono">06 / Always</div><h4>Continuous learning</h4><p>We keep improving, refining, and adapting alongside the work we build.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="projects" id="work">
+    <section class="projects scroll-reveal" id="work">
       <div class="wrap">
         <div class="section-head"><div><div class="section-label mono">/ 03 — Selected work</div><h3>Proof of work.</h3></div><p>Real solutions for real people, businesses, and the way they operate.</p></div>
-        <article class="project">
+        <div class="project-carousel" aria-label="Selected projects">
+        <article class="project active" aria-hidden="false">
           <div class="project-info"><span class="project-tag mono">Product / 01</span><h4>LinkUltra</h4><p>A link-in-bio platform for creators to bring their whole online presence together. Custom usernames, themes, unlimited links, and click analytics.</p><div class="project-meta mono">Recognized on AppBuildersPH ↗</div></div>
           <div class="project-art"><img src="imgs/LinkUltra.png" alt="Abstract network design representing LinkUltra" /></div>
         </article>
-        <article class="project">
+        <article class="project" aria-hidden="true">
           <div class="project-info"><span class="project-tag mono">Business system / 02</span><h4>NRivera Clinic POS</h4><p>An offline point of sale and inventory system for NRivera Skin Specialists. Sales, products, barcode scanning, reports, analytics, and more — all on local data.</p><div class="project-meta mono">Electron / Express.js / SQLite / EJS</div></div>
           <div class="project-art dark"><img src="imgs/NRivera.png" alt="Abstract interface design representing a business system" /></div>
         </article>
-        <article class="project">
+        <article class="project" aria-hidden="true">
           <div class="project-info"><span class="project-tag mono">Digital experience / 03</span><h4>Farlight Luminaires</h4><p>Our work in another business environment — finding the signal in a different set of needs and building from there.</p><div class="project-meta mono">View project ↗</div></div>
           <div class="project-art"><img src="imgs/Luminaries.png" alt="Abstract geometric design representing Farlight Luminaires" /></div>
         </article>
-      </div>
-    </section>
-
-    <section class="process" id="process">
-      <div class="wrap">
-        <div class="section-head"><div><div class="section-label mono">/ 04 — How we work</div><h3>Start with<br />understanding.</h3></div><p>Good technology begins before a line of code is written.</p></div>
-        <div class="process-grid">
-          <article class="step"><strong>01</strong><h4>Understand the business</h4><p>We listen first — to the people, the process, and the context.</p></article>
-          <article class="step"><strong>02</strong><h4>Identify the challenge</h4><p>We find the friction that is worth solving.</p></article>
-          <article class="step"><strong>03</strong><h4>Plan the solution</h4><p>We shape a clear, practical way forward.</p></article>
-          <article class="step"><strong>04</strong><h4>Build & refine</h4><p>We build around the workflow, then improve with feedback.</p></article>
+        <div class="carousel-controls">
+          <div class="carousel-buttons">
+            <button class="carousel-button carousel-previous" type="button" aria-label="Previous project">←</button>
+            <button class="carousel-button carousel-next" type="button" aria-label="Next project">→</button>
+          </div>
+          <div class="carousel-dots" role="tablist" aria-label="Choose a project">
+            <button class="carousel-dot active" type="button" role="tab" aria-label="Show LinkUltra" aria-selected="true"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Show NRivera Clinic POS" aria-selected="false"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Show Farlight Luminaires" aria-selected="false"></button>
+          </div>
+        </div>
         </div>
       </div>
     </section>
 
-    <section class="contact" id="contact">
+    <section class="process scroll-reveal" id="process">
       <div class="wrap">
+        <div class="section-head"><div><div class="section-label mono">/ 04 — How we work</div><h3>Start with<br />understanding.</h3></div><p>Good technology begins before a line of code is written.</p></div>
+        <div class="process-grid">
+          <article class="step scroll-reveal" data-delay="1"><strong>01</strong><h4>Understand the business</h4><p>We listen first — to the people, the process, and the context.</p></article>
+          <article class="step scroll-reveal" data-delay="2"><strong>02</strong><h4>Identify the challenge</h4><p>We find the friction that is worth solving.</p></article>
+          <article class="step scroll-reveal" data-delay="3"><strong>03</strong><h4>Plan the solution</h4><p>We shape a clear, practical way forward.</p></article>
+          <article class="step scroll-reveal" data-delay="1"><strong>04</strong><h4>Build & refine</h4><p>We build around the workflow, then improve with feedback.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact scroll-reveal" id="contact">
+      <div class="wrap scroll-drift">
         <div class="mono">/ 05 — Let’s build something that fits</div>
         <h3>Tell us what your business needs.<br />We’ll build the solution for it.</h3>
-        <div class="contact-row"><a class="email" href="mailto:hello@unorthodox.tech">hello@unorthodox.tech ↗</a><span class="mono">Philippines / 2024—present</span></div>
+        <div class="contact-row"><div class="contact-links"><a class="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=unorthodox.technologies@gmail.com" target="_blank" rel="noopener noreferrer">Gmail ↗</a><a class="social-link" href="https://www.facebook.com/profile.php?id=61591295648007" target="_blank" rel="noopener noreferrer">Facebook ↗</a></div><span class="mono">Philippines / 2024—present</span></div>
         <footer><a class="brand" href="#"><img class="brand-logo" src="imgs/logo_b.png" alt="Unorthodox Technologies" /></a><span class="mono">Different thinking. Purpose-built technology.</span></footer>
       </div>
     </section>
@@ -216,6 +246,8 @@
     (() => {
       const hero = document.querySelector(".hero");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const driftElements = [...document.querySelectorAll(".scroll-drift")];
+      const revealElements = [...document.querySelectorAll(".scroll-reveal")];
       let ticking = false;
 
       const updateBall = () => {
@@ -245,6 +277,13 @@
         hero.style.setProperty("--ball-scale-x", pulse.toFixed(3));
         hero.style.setProperty("--ball-scale-y", pulse.toFixed(3));
         hero.style.setProperty("--scroll-color", scrollColor);
+
+        driftElements.forEach((element) => {
+          const bounds = element.getBoundingClientRect();
+          const distance = (window.innerHeight / 2 - (bounds.top + bounds.height / 2)) * 0.035;
+          const offset = Math.max(-14, Math.min(14, distance));
+          element.style.setProperty("--scroll-offset", `${offset.toFixed(1)}px`);
+        });
       };
 
       const onScroll = () => {
@@ -257,6 +296,71 @@
       window.addEventListener("scroll", onScroll, { passive: true });
       reducedMotion.addEventListener("change", updateBall);
       updateBall();
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+
+      if (reducedMotion.matches) {
+        revealElements.forEach((element) => element.classList.add("is-visible"));
+      } else {
+        revealElements.forEach((element) => revealObserver.observe(element));
+      }
+
+      const carousel = document.querySelector(".project-carousel");
+      const projects = [...carousel.querySelectorAll(".project")];
+      const dots = [...carousel.querySelectorAll(".carousel-dot")];
+      const previousButton = carousel.querySelector(".carousel-previous");
+      const nextButton = carousel.querySelector(".carousel-next");
+      let currentProject = 0;
+      let carouselTimer;
+
+      const showProject = (index) => {
+        currentProject = (index + projects.length) % projects.length;
+        projects.forEach((project, projectIndex) => {
+          const isActive = projectIndex === currentProject;
+          project.classList.toggle("active", isActive);
+          project.setAttribute("aria-hidden", String(!isActive));
+        });
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === currentProject;
+          dot.classList.toggle("active", isActive);
+          dot.setAttribute("aria-selected", String(isActive));
+        });
+      };
+
+      const startCarousel = () => {
+        window.clearInterval(carouselTimer);
+        if (reducedMotion.matches) return;
+        carouselTimer = window.setInterval(() => showProject(currentProject + 1), 5000);
+      };
+
+      previousButton.addEventListener("click", () => {
+        showProject(currentProject - 1);
+        startCarousel();
+      });
+      nextButton.addEventListener("click", () => {
+        showProject(currentProject + 1);
+        startCarousel();
+      });
+      dots.forEach((dot, dotIndex) => {
+        dot.addEventListener("click", () => {
+          showProject(dotIndex);
+          startCarousel();
+        });
+      });
+      carousel.addEventListener("mouseenter", () => window.clearInterval(carouselTimer));
+      carousel.addEventListener("mouseleave", startCarousel);
+      carousel.addEventListener("focusin", () => window.clearInterval(carouselTimer));
+      carousel.addEventListener("focusout", (event) => {
+        if (!carousel.contains(event.relatedTarget)) startCarousel();
+      });
+      reducedMotion.addEventListener("change", startCarousel);
+      startCarousel();
     })();
   </script>
 </body>
