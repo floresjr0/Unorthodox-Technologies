@@ -1,11 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Unorthodox Technologies builds purpose-built digital systems for the way your business actually works." />
+  <title>Unorthodox Technologies — Purpose-built technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b0d12;
+      --muted: #81858c;
+      --paper: #f3f4f0;
+      --lime: #a8c76f;
+      --line: rgba(11, 13, 18, .16);
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Manrope", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1240px; margin: auto; padding: 0 42px; }
+    .mono { font-family: "DM Mono", monospace; text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+    header { position: absolute; z-index: 4; width: 100%; color: var(--white); }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 26px 0; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 800; letter-spacing: -.05em; }
+    .brand-logo { display: block; width: 154px; height: auto; }
+    .nav-links { display: flex; gap: 34px; font-size: 12px; font-weight: 700; }
+    .nav-links a { opacity: .78; transition: opacity .2s; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-cta { border: 1px solid rgba(255,255,255,.5); border-radius: 100px; padding: 11px 17px; font-size: 11px; font-weight: 800; }
+    .hero { position: relative; overflow: hidden; min-height: 760px; display: flex; align-items: flex-end; color: var(--white); background: var(--ink); --scroll-color: var(--lime); }
+    .hero-shape { position: absolute; z-index: 0; width: 230px; height: 230px; right: 8%; top: 19%; perspective: 700px; transform: translateY(var(--ball-y, 0px)) rotate(var(--ball-rotate, 0deg)) scaleX(var(--ball-scale-x, 1)) scaleY(var(--ball-scale-y, 1)); transform-origin: center bottom; will-change: transform; }
+    .hero-shape-front, .hero-shape-side { position: absolute; inset: 0; background: var(--lime); border-radius: var(--ball-radius, 50%); }
+    .hero-shape-front { opacity: .98; transform: translateZ(30px); }
+    .hero-shape-side { background: #71854b; opacity: .95; transform: translate(22px, 22px) translateZ(0); }
+    .hero-content { position: relative; z-index: 1; width: 100%; padding-bottom: 58px; }
+    .eyebrow { color: var(--lime); margin-bottom: 24px; }
+    h1 { max-width: 980px; margin: 0; font-size: clamp(56px, 9.2vw, 128px); line-height: .9; letter-spacing: -.085em; }
+    h1 em { color: var(--lime); font-style: normal; }
+    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-top: 40px; }
+    .hero-copy { max-width: 400px; color: #b7bac0; font-size: 14px; line-height: 1.7; }
+    .hero-copy strong { color: white; font-weight: 600; }
+    .scroll { display: flex; gap: 12px; align-items: center; color: var(--scroll-color); transition: color .35s ease; }
+    .scroll i { display: block; width: 42px; height: 1px; background: currentColor; transition: background-color .35s ease; }
+    .intro { padding: 120px 0 130px; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; }
+    .section-label { color: #575c62; padding-top: 6px; }
+    .intro h2, .statement h2 { margin: 0; max-width: 830px; font-size: clamp(34px, 5vw, 68px); line-height: 1.03; letter-spacing: -.07em; }
+    .intro h2 span { color: #a4a8ae; }
+    .statement { background: var(--lime); padding: 84px 0; }
+    .statement h2 { max-width: 900px; }
+    .statement .mono { margin-bottom: 24px; }
+    .services { padding: 120px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 54px; }
+    h3 { font-size: clamp(38px, 5.5vw, 72px); letter-spacing: -.08em; line-height: .95; margin: 0; }
+    .section-head p { color: var(--muted); max-width: 330px; font-size: 13px; line-height: 1.7; margin: 0; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+    .service { min-height: 190px; padding: 27px 25px 22px 0; border-bottom: 1px solid var(--line); }
+    .service:nth-child(3n+2), .service:nth-child(3n+3) { border-left: 1px solid var(--line); padding-left: 25px; }
+    .service-number { color: #8d9297; margin-bottom: 42px; }
+    .service h4 { margin: 0 0 9px; font-size: 20px; letter-spacing: -.05em; }
+    .service p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .projects { color: var(--white); background: var(--ink); padding: 120px 0; }
+    .projects .section-label, .projects .section-head p { color: #90949b; }
+    .projects h3 { color: white; }
+    .project { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 420px; border-top: 1px solid rgba(255,255,255,.2); }
+    .project:last-child { border-bottom: 1px solid rgba(255,255,255,.2); }
+    .project-info { padding: 43px 50px 43px 0; }
+    .project-tag { display: inline-block; color: var(--lime); border: 1px solid rgba(168,199,111,.5); border-radius: 100px; padding: 7px 12px; margin-bottom: 78px; }
+    .project h4 { margin: 0 0 20px; font-size: clamp(29px, 4vw, 52px); letter-spacing: -.07em; }
+    .project p { max-width: 410px; color: #a8abb0; font-size: 13px; line-height: 1.7; margin: 0 0 27px; }
+    .project-meta { color: #73777d; }
+    .project-art { position: relative; overflow: hidden; border-left: 1px solid rgba(255,255,255,.2); background: #e8e9e5; }
+    .project-art img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s; }
+    .project:hover .project-art img { transform: scale(1.04); }
+    .project-art.dark { background: var(--lime); }
+    .process { padding: 120px 0; }
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+    .step { padding: 27px 20px 10px 0; min-height: 210px; border-bottom: 1px solid var(--line); }
+    .step + .step { border-left: 1px solid var(--line); padding-left: 20px; }
+    .step strong { display: block; font-size: 54px; letter-spacing: -.08em; color: var(--lime); -webkit-text-stroke: 1px var(--ink); margin-bottom: 44px; }
+    .step h4 { margin: 0 0 11px; font-size: 18px; }
+    .step p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .contact { position: relative; overflow: hidden; background: var(--lime); padding: 110px 0 45px; }
+    .contact h3 { max-width: 800px; margin-bottom: 60px; }
+    .contact-row { display: flex; justify-content: space-between; align-items: end; border-top: 1px solid rgba(11,13,18,.3); padding-top: 22px; }
+    .email { font-size: clamp(20px, 3vw, 34px); font-weight: 700; letter-spacing: -.06em; }
+    footer { display: flex; justify-content: space-between; padding-top: 70px; color: rgba(11,13,18,.65); font-size: 11px; }
+    footer .brand { color: var(--ink); }
+    .contact .brand-logo { filter: saturate(.9); }
+    @media (max-width: 720px) {
+      .wrap { padding: 0 22px; }
+      .nav-links { display: none; }
+      .hero { min-height: 690px; }
+      .hero-content { padding-bottom: 34px; }
+      .hero-bottom, .section-head, .contact-row { display: block; }
+      .scroll { margin-top: 30px; }
+      .intro, .services, .projects, .process { padding: 75px 0; }
+      .intro-grid { display: block; }
+      .intro-grid .section-label { margin-bottom: 30px; }
+      .service-grid, .process-grid { grid-template-columns: 1fr 1fr; }
+      .service:nth-child(3n+2), .service:nth-child(3n+3) { border-left: 0; padding-left: 0; }
+      .service:nth-child(even), .step + .step { border-left: 1px solid var(--line); padding-left: 16px; }
+      .project { display: flex; flex-direction: column; }
+      .project-info { padding: 30px 0; }
+      .project-tag { margin-bottom: 45px; }
+      .project-art { min-height: 240px; border-left: 0; }
+      .project-art.dark:after { font-size: 70px; }
+      .contact { padding: 75px 0 30px; }
+      footer { padding-top: 50px; display: block; }
+      footer .mono { margin-top: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-shape, .project-art img { animation: none; transition: none; transform: none; }
+    }
+  </style>
 </head>
 <body>
-    
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="#"><img class="brand-logo" src="imgs/logo.png" alt="Unorthodox Technologies" /></a>
+        <div class="nav-links"><a href="#about">About</a><a href="#services">Capabilities</a><a href="#work">Work</a><a href="#process">Process</a></div>
+        <a class="nav-cta" href="#contact">Start a conversation <span>↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-shape" aria-hidden="true"><div class="hero-shape-side"></div><div class="hero-shape-front"></div></div>
+      <div class="wrap hero-content">
+        <h1>Different thinking.<br><em>Purpose-built</em><br>technology.</h1>
+        <div class="hero-bottom">
+          <p class="hero-copy"><strong>We build custom systems around how your business actually runs.</strong><br />No one-size-fits-all software. Just useful technology, made for your reality.</p>
+          <a class="scroll mono" href="#about"><i></i> Explore our approach</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro" id="about">
+      <div class="wrap intro-grid">
+        <div class="section-label mono">/ 01 — The unorthodox way</div>
+        <h2>Technology should adapt to your business, <span>not the other way around.</span></h2>
+      </div>
+    </section>
+
+    <section class="statement">
+      <div class="wrap">
+        <div class="mono">Our point of view</div>
+        <h2>Built around your business.<br />Designed for your goals.</h2>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="section-label mono">/ 02 — What we do</div><h3>Made to fit.</h3></div>
+          <p>From first idea to daily operations, we make digital tools practical, adaptable, and genuinely useful.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service"><div class="service-number mono">01 / Systems</div><h4>Custom business systems</h4><p>Management, inventory, and point of sale systems shaped around your workflow.</p></article>
+          <article class="service"><div class="service-number mono">02 / Digital</div><h4>Websites & platforms</h4><p>Digital experiences that communicate clearly and move your goals forward.</p></article>
+          <article class="service"><div class="service-number mono">03 / Software</div><h4>Desktop & mobile apps</h4><p>Purpose-built applications that work where your people and customers are.</p></article>
+          <article class="service"><div class="service-number mono">04 / Delivery</div><h4>Deployment</h4><p>Technical implementation that gets your solution ready for the real world.</p></article>
+          <article class="service"><div class="service-number mono">05 / Partnership</div><h4>Other IT solutions</h4><p>Have a challenge that does not fit a category? That is exactly where we start.</p></article>
+          <article class="service"><div class="service-number mono">06 / Always</div><h4>Continuous learning</h4><p>We keep improving, refining, and adapting alongside the work we build.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="work">
+      <div class="wrap">
+        <div class="section-head"><div><div class="section-label mono">/ 03 — Selected work</div><h3>Proof of work.</h3></div><p>Real solutions for real people, businesses, and the way they operate.</p></div>
+        <article class="project">
+          <div class="project-info"><span class="project-tag mono">Product / 01</span><h4>LinkUltra</h4><p>A link-in-bio platform for creators to bring their whole online presence together. Custom usernames, themes, unlimited links, and click analytics.</p><div class="project-meta mono">Recognized on AppBuildersPH ↗</div></div>
+          <div class="project-art"><img src="imgs/10.png" alt="Abstract network design representing LinkUltra" /></div>
+        </article>
+        <article class="project">
+          <div class="project-info"><span class="project-tag mono">Business system / 02</span><h4>NRivera Clinic POS</h4><p>An offline point of sale and inventory system for NRivera Skin Specialists. Sales, products, barcode scanning, reports, analytics, and more — all on local data.</p><div class="project-meta mono">Electron / Express.js / SQLite / EJS</div></div>
+          <div class="project-art dark"><img src="imgs/11.png" alt="Abstract interface design representing a business system" /></div>
+        </article>
+        <article class="project">
+          <div class="project-info"><span class="project-tag mono">Digital experience / 03</span><h4>Farlight Luminaires</h4><p>Our work in another business environment — finding the signal in a different set of needs and building from there.</p><div class="project-meta mono">View project ↗</div></div>
+          <div class="project-art"><img src="imgs/9.png" alt="Abstract geometric design representing Farlight Luminaires" /></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="process" id="process">
+      <div class="wrap">
+        <div class="section-head"><div><div class="section-label mono">/ 04 — How we work</div><h3>Start with<br />understanding.</h3></div><p>Good technology begins before a line of code is written.</p></div>
+        <div class="process-grid">
+          <article class="step"><strong>01</strong><h4>Understand the business</h4><p>We listen first — to the people, the process, and the context.</p></article>
+          <article class="step"><strong>02</strong><h4>Identify the challenge</h4><p>We find the friction that is worth solving.</p></article>
+          <article class="step"><strong>03</strong><h4>Plan the solution</h4><p>We shape a clear, practical way forward.</p></article>
+          <article class="step"><strong>04</strong><h4>Build & refine</h4><p>We build around the workflow, then improve with feedback.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div class="mono">/ 05 — Let’s build something that fits</div>
+        <h3>Tell us what your business needs.<br />We’ll build the solution for it.</h3>
+        <div class="contact-row"><a class="email" href="mailto:hello@unorthodox.tech">hello@unorthodox.tech ↗</a><span class="mono">Philippines / 2024—present</span></div>
+        <footer><a class="brand" href="#"><img class="brand-logo" src="imgs/logo_b.png" alt="Unorthodox Technologies" /></a><span class="mono">Different thinking. Purpose-built technology.</span></footer>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const hero = document.querySelector(".hero");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let ticking = false;
+
+      const updateBall = () => {
+        ticking = false;
+        if (reducedMotion.matches) {
+          hero.style.setProperty("--ball-y", "0px");
+          hero.style.setProperty("--ball-radius", "50%");
+          hero.style.setProperty("--ball-rotate", "0deg");
+          hero.style.setProperty("--ball-scale-x", "1");
+          hero.style.setProperty("--ball-scale-y", "1");
+          hero.style.setProperty("--scroll-color", "var(--lime)");
+          return;
+        }
+
+        const progress = Math.min(Math.max(window.scrollY / hero.offsetHeight, 0), 1);
+        const ground = 260;
+        const y = progress * ground;
+        const morph = Math.sin(progress * Math.PI);
+        const radius = 50 - (morph * 38);
+        const rotation = progress * 180;
+        const pulse = 1 + (morph * 0.08);
+        const scrollColor = progress >= 0.75 ? "var(--white)" : "var(--lime)";
+
+        hero.style.setProperty("--ball-y", `${Math.round(y)}px`);
+        hero.style.setProperty("--ball-radius", `${radius.toFixed(1)}%`);
+        hero.style.setProperty("--ball-rotate", `${Math.round(rotation)}deg`);
+        hero.style.setProperty("--ball-scale-x", pulse.toFixed(3));
+        hero.style.setProperty("--ball-scale-y", pulse.toFixed(3));
+        hero.style.setProperty("--scroll-color", scrollColor);
+      };
+
+      const onScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateBall);
+          ticking = true;
+        }
+      };
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      reducedMotion.addEventListener("change", updateBall);
+      updateBall();
+    })();
+  </script>
 </body>
 </html>
